@@ -1,1 +1,6 @@
-<template><h1>${title}</h1></template>
+<template>
+    <h1>${title}</h1>
+    <p>Validation Result: ${validationResult.valid} - ${validationResult.message}</p>
+    <input type="text" value.bind="validationValue" />
+    <input type="button" click.trigger="ValidateMzr()" />
+</template>
