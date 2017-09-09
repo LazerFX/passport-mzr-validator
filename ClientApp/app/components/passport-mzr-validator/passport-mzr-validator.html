@@ -1,5 +1,15 @@
 <template>
     <h1>${title}</h1>
+    <form>
+        <p>Passport No. <input type="text" /></p>
+        <p>Nationality <input type="text" /></p>
+        <p>Date of Birth <input type="date" /></p>
+        <p>Gender <select>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select></p>
+        <p>Date of Expiry <input type="date" /></p>
+    </form>
     <p>Validation Result: ${validationResult.valid} - ${validationResult.message}</p>
     <input type="text" value.bind="validationValue" />
     <input type="button" click.trigger="ValidateMzr()" />
