@@ -27,6 +27,13 @@ export class App {
             moduleId: PLATFORM.moduleName('../fetchdata/fetchdata'),
             nav: true,
             title: 'Fetch data'
+        }, {
+            route: 'passport-mzr-validator',
+            name: 'passportmzrvalidator',
+            settings: { icon: 'th-list' },
+            moduleId: PLATFORM.moduleName('../passport-mzr-validator/passport-mzr-validator'),
+            nav: true,
+            title: 'Passport MZR Validator'
         }]);
 
         this.router = router;
