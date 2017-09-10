@@ -10,7 +10,7 @@ export class ServerApi {
     }
 
     buildMzrObject(passportNo: string, nationality: string, 
-        dateOfBirth: Date, gender: Gender, dateOfExpiry: Date,
+        dateOfBirth: Date, gender: string, dateOfExpiry: Date,
         mzr: string) : MzrInput {
             return {
                 PassportNo: passportNo,
@@ -41,15 +41,16 @@ export class MzrInput
     PassportNo: string;
     Nationality: string
     DateOfBirth: Date;
-    Gender: Gender;
+    Gender: string;
     DateOfExpiry: Date;
     Mzr: string;
 }
 
-export enum Gender {
-    Male,
-    Female
+export let Gender = {
+    Male: "Male",
+    Female: "Female"
 }
+
 
 export interface IMzrValidationResult {
     valid: boolean;

@@ -5,9 +5,9 @@
         <p>Nationality <input type="text" value.bind="inputValue.Nationality"/></p>
         <p>Date of Birth <input type="date" value.bind="inputValue.DateOfBirth"/></p>
         <p>Gender <select value.bind="inputValue.Gender">
-            <option value="">Choose...</option>
-            <option repeat.for="gender of Gender"
-                    value.bind="gender">${gender}</option>
+            <option value="-1">Choose...</option>
+            <option value="0">Male</option>
+            <option value="1">Female</option>
             </select></p>
         <p>Date of Expiry <input type="date" value.bind="inputValue.DateOfExpiry"/></p>
         <p>Mzr <input type="text" value.bind="inputValue.Mzr" /></p>
