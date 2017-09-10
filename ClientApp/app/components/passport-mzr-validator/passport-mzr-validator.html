@@ -1,16 +1,17 @@
 <template>
     <h1>${title}</h1>
     <form>
-        <p>Passport No. <input type="text" /></p>
-        <p>Nationality <input type="text" /></p>
-        <p>Date of Birth <input type="date" /></p>
-        <p>Gender <select>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-        </select></p>
-        <p>Date of Expiry <input type="date" /></p>
+        <p>Passport No. <input type="text" value.bind="inputValue.PassportNo"/></p>
+        <p>Nationality <input type="text" value.bind="inputValue.Nationality"/></p>
+        <p>Date of Birth <input type="date" value.bind="inputValue.DateOfBirth"/></p>
+        <p>Gender <select value.bind="inputValue.Gender">
+            <option value="">Choose...</option>
+            <option repeat.for="gender of Gender"
+                    value.bind="gender">${gender}</option>
+            </select></p>
+        <p>Date of Expiry <input type="date" value.bind="inputValue.DateOfExpiry"/></p>
+        <p>Mzr <input type="text" value.bind="inputValue.Mzr" /></p>
     </form>
     <p>Validation Result: ${validationResult.valid} - ${validationResult.message}</p>
-    <input type="text" value.bind="validationValue" />
     <input type="button" click.trigger="ValidateMzr()" />
 </template>

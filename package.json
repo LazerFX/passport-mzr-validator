@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "dependencies": {
+    "@types/bluebird": "^3.5.10",
     "aurelia-bootstrapper": "^2.0.1",
     "aurelia-fetch-client": "^1.0.1",
     "aurelia-framework": "^1.1.0",
