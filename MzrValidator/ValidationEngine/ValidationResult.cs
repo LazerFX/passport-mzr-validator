@@ -10,5 +10,16 @@ namespace Mzr.ValidationEngine
         public string Message { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public ValidationStatus Status { get; set; }
+
+        public ValidationResult() {
+            Field = "";
+            Message = "";
+            Status = ValidationStatus.Error;
+        }
+        public ValidationResult(string field, string message, ValidationStatus status) {
+            Field = field;
+            Message = message;
+            Status = status;
+        }
     }
 }
