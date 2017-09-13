@@ -11,10 +11,9 @@ namespace passport_mzr_validator.Controllers
     public class MzrDataController : Controller
     {
         [HttpPost("[action]")]
-        public MzrOutput ValidateMzr([FromBody]MzrInput mzr)
+        public Mzr.ValidationEngine.ValidationResult[] ValidateMzr([FromBody]MzrInput mzr)
         {
-            var validator = new Mzr.Validation.Validator(mzr);
-            return validator.Valid;
+            return Mzr.Validation.MzrValidator.Validate(mzr);
         }
     }
 }

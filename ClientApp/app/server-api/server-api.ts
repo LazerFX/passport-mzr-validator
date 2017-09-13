@@ -22,16 +22,16 @@ export class ServerApi {
             };
         }
 
-    ValidateMzr(mzr: MzrInput): Promise<IMzrValidationResult> {
+    ValidateMzr(mzr: MzrInput): Promise<IMzrValidationResult[]> {
         return fetch(`api/MzrData/ValidateMzr`,
                 {method: "post",
                  body: json(mzr)})
             .then(response => response.json())
             .then(data => {
-                return data as IMzrValidationResult;
+                return data as IMzrValidationResult[];
             })
             .catch(err => {
-                return { valid: false, messages: [{ id: 0, fieldName: "Error", message: err.toString() }] };
+                return [{ field: "error", status: "Error", message: err }];
             });
     }
 }
@@ -50,14 +50,8 @@ export const Gender: any = {
     Female: "Female"
 };
 
-
-export interface IMzrValidationField {
-    id: number;
-    fieldName: string;
-    message: string;
-}
-
 export interface IMzrValidationResult {
-    valid: boolean;
-    messages: IMzrValidationField[];
+    field: string;
+    message: string;
+    status: string;
 }

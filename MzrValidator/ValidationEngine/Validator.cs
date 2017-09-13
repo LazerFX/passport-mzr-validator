@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -5,9 +6,9 @@ namespace Mzr.ValidationEngine
 {
     public class Validator<T> : IValidator<T>
     {
-        public IValidation<T>[] Validations { get; set; }
+        public Func<T, ValidationResult>[] Validations { get; set; }
 
-        public Validator(IValidation<T>[] validations) {
+        public Validator(Func<T, ValidationResult>[] validations) {
             Validations = validations;
         }
 
@@ -15,7 +16,7 @@ namespace Mzr.ValidationEngine
             var result = new List<ValidationResult>();
 
             foreach (var validation in Validations) {
-                result.Add(validation.Validate(input));
+                result.Add(validation(input));
             }
 
             return result.ToArray();

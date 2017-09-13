@@ -4,13 +4,13 @@ import { inject } from "aurelia-framework";
 @inject(ServerApi)
 export class PassportMzrValidator {
     title: string = "Validator";
-    validationResult: IMzrValidationResult;
+    validationResults: IMzrValidationResult[];
     serverApi: ServerApi;
     inputValue: MzrInput;
 
     constructor(serverApi: ServerApi) {
         this.serverApi = serverApi;
-        this.validationResult = { messages: [ { id: 0, fieldName: "None", message: "Not tested" } ], valid: false };
+        this.validationResults = [ { field: "error", status: "Error", message: "Not validated yet" } ];
         this.inputValue = {
             DateOfBirth: new Date(),
             DateOfExpiry: new Date(),
@@ -25,7 +25,7 @@ export class PassportMzrValidator {
         console.log(this.inputValue);
         this.serverApi.ValidateMzr(this.inputValue)
             .then(result => {
-                this.validationResult = result;
+                this.validationResults = result;
             });
     }
 }

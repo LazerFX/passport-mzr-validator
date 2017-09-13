@@ -1,3 +1,6 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 namespace Mzr.ValidationEngine
 {
     // A result from validations
@@ -5,6 +8,7 @@ namespace Mzr.ValidationEngine
     {
         public string Field { get; set; }
         public string Message { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
         public ValidationStatus Status { get; set; }
     }
 }

@@ -14,7 +14,7 @@
     </form>
     <p>Validation Result: 
         <ul>
-            <li repeat.for="message of validationResult.messages">${message.id} - ${message.fieldName} - ${message.message}</li>
+            <li repeat.for="result of validationResults">${result.field} - ${result.status} - ${result.message}</li>
         </ul>
     </p>
     <input type="button" click.trigger="ValidateMzr()" />
