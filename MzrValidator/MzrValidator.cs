@@ -16,13 +16,15 @@ namespace Mzr.Validation
                 return new MzrOutput
                 {
                     Valid = true,
-                    Message = "Data is valid."
+                    Messages = new MzrValidationField[]{}
                 };
             }
             return new MzrOutput
             {
                 Valid = false,
-                Message = "Data did not match test pattern."
+                Messages = new MzrValidationField[]{
+                    new MzrValidationField { Id = 0, FieldName = "Mzr", Message = "Mzr Value does not match" }
+                }
             };
         }
     }

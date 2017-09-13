@@ -12,6 +12,10 @@
         <p>Date of Expiry <input type="date" value.bind="inputValue.DateOfExpiry"/></p>
         <p>Mzr <input type="text" value.bind="inputValue.Mzr" /></p>
     </form>
-    <p>Validation Result: ${validationResult.valid} - ${validationResult.message}</p>
+    <p>Validation Result: 
+        <ul>
+            <li repeat.for="message of validationResult.messages">${message.id} - ${message.fieldName} - ${message.message}</li>
+        </ul>
+    </p>
     <input type="button" click.trigger="ValidateMzr()" />
 </template>

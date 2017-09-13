@@ -1,5 +1,5 @@
-import { HttpClient, json } from 'aurelia-fetch-client'
-import { inject } from 'aurelia-framework'
+import { HttpClient, json } from "aurelia-fetch-client";
+import { inject } from "aurelia-framework";
 
 @inject(HttpClient)
 export class ServerApi {
@@ -9,9 +9,9 @@ export class ServerApi {
         this.fetch = httpClient;
     }
 
-    buildMzrObject(passportNo: string, nationality: string, 
+    buildMzrObject(passportNo: string, nationality: string,
         dateOfBirth: Date, gender: string, dateOfExpiry: Date,
-        mzr: string) : MzrInput {
+        mzr: string): MzrInput {
             return {
                 PassportNo: passportNo,
                 Nationality: nationality,
@@ -23,36 +23,41 @@ export class ServerApi {
         }
 
     ValidateMzr(mzr: MzrInput): Promise<IMzrValidationResult> {
-        return fetch(`api/MzrData/ValidateMzr`, 
-                {method: 'post', 
+        return fetch(`api/MzrData/ValidateMzr`,
+                {method: "post",
                  body: json(mzr)})
             .then(response => response.json())
             .then(data => {
                 return data as IMzrValidationResult;
             })
             .catch(err => {
-                return { valid: false, message: err.toString() };
-            })
+                return { valid: false, messages: [{ id: 0, fieldName: "Error", message: err.toString() }] };
+            });
     }
 }
 
-export class MzrInput
-{
+export class MzrInput {
     PassportNo: string;
-    Nationality: string
+    Nationality: string;
     DateOfBirth: Date;
     Gender: string;
     DateOfExpiry: Date;
     Mzr: string;
 }
 
-export let Gender = {
+export const Gender: any = {
     Male: "Male",
     Female: "Female"
-}
+};
 
+
+export interface IMzrValidationField {
+    id: number;
+    fieldName: string;
+    message: string;
+}
 
 export interface IMzrValidationResult {
     valid: boolean;
-    message: string;
+    messages: IMzrValidationField[];
 }

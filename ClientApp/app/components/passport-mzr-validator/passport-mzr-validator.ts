@@ -1,5 +1,5 @@
 import { ServerApi, IMzrValidationResult, MzrInput, Gender } from "../../server-api/server-api";
-import { inject } from 'aurelia-framework'
+import { inject } from "aurelia-framework";
 
 @inject(ServerApi)
 export class PassportMzrValidator {
@@ -10,7 +10,7 @@ export class PassportMzrValidator {
 
     constructor(serverApi: ServerApi) {
         this.serverApi = serverApi;
-        this.validationResult = { message: "No Validation Attempted", valid: false };
+        this.validationResult = { messages: [ { id: 0, fieldName: "None", message: "Not tested" } ], valid: false };
         this.inputValue = {
             DateOfBirth: new Date(),
             DateOfExpiry: new Date(),
@@ -24,6 +24,8 @@ export class PassportMzrValidator {
     ValidateMzr(): void {
         console.log(this.inputValue);
         this.serverApi.ValidateMzr(this.inputValue)
-            .then(result => this.validationResult = result);
+            .then(result => {
+                this.validationResult = result;
+            });
     }
 }
