@@ -1,5 +1,9 @@
 passport-mzr-validator
 
+Requires ASP.NET Core 2 to build, and is developed in Visual Studio Code.
+
+Requires NPM / NodeJS at the latest available versions.
+
 Uses the `dotnet new aurelia` framework to start-up.
 
 To build, use `dotnet restore` and then `npm install`.
