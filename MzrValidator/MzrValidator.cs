@@ -10,7 +10,9 @@ namespace Mzr.Validation
         new Func<MzrInput, ValidationStatus>[] {
             Validations.MustHaveAZ09LessThan,
             Validations.LengthMustBe44Characters,
-            Validations.PassportNoAndMzrMustMatch
+            Validations.PassportNoAndMzrMustMatch,
+            Validations.PassportCheckDigitMustBeNumeric,
+            Validations.PassportCheckDigitMustCalcluate
         };
         private static Validator<MzrInput> validator = new Validator<MzrInput>(validations);
 
@@ -46,6 +48,25 @@ namespace Mzr.Validation
             var paddedPassport = Helper.InputPad(input.PassportNo, 9);
             
             return inputPassport == paddedPassport ? ValidationStatus.Valid : ValidationStatus.Warning;
+        }
+
+        [Field("Mzr")]
+        [Message("Passport Check Digit must be a number.")]
+        public static ValidationStatus PassportCheckDigitMustBeNumeric(MzrInput input) {
+            var inputPassportCheckDigit = Helper.GetPassportCheckDigit(input);
+            
+            return Int16.TryParse(inputPassportCheckDigit, out _) ? ValidationStatus.Valid : ValidationStatus.Error;
+        }
+
+        [Field("Mzr")]
+        [Message("Passport Check Digit does not match.")]
+        public static ValidationStatus PassportCheckDigitMustCalcluate(MzrInput input) {
+            var inputPassport = Helper.GetPassportNo(input);
+            var inputPassportCheckDigit = Helper.GetPassportCheckDigit(input);
+            var calculatedPassportCheckDigit = Helper.CalculateCheckDigit(inputPassport);
+            Int16.TryParse(inputPassportCheckDigit, out Int16 inputPassportCheckDigitInt);
+
+            return inputPassportCheckDigitInt == calculatedPassportCheckDigit ? ValidationStatus.Valid : ValidationStatus.Error;
         }
     }
 }
