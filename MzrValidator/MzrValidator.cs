@@ -8,7 +8,8 @@ namespace Mzr.Validation
     {
         private static readonly Func<MzrInput, ValidationResult>[] validations =
         new Func<MzrInput, ValidationResult>[] {
-            Validations.MustHaveAZ09LessThan
+            Validations.MustHaveAZ09LessThan,
+            Validations.LengthMustBe44Characters
         };
         private static Validator<MzrInput> validator = new Validator<MzrInput>(validations);
 
@@ -29,6 +30,18 @@ namespace Mzr.Validation
 
             if (!valid)
             {
+                returnValue.Status = ValidationStatus.Error;
+            }
+
+            return returnValue;
+        }
+
+        public static ValidationResult LengthMustBe44Characters(MzrInput input) {
+            var valid = input.Mzr.Length == 44;
+            var returnValue = new ValidationResult("Mzr",
+                "Mzr must have a lenght of 44 characters", ValidationStatus.Valid);
+
+            if (!valid) {
                 returnValue.Status = ValidationStatus.Error;
             }
 
