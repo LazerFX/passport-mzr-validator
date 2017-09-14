@@ -6,8 +6,8 @@ namespace Mzr.Validation
 {
     public static class MzrValidator
     {
-        private static readonly Func<MzrInput, ValidationResult>[] validations =
-        new Func<MzrInput, ValidationResult>[] {
+        private static readonly Func<MzrInput, ValidationStatus>[] validations =
+        new Func<MzrInput, ValidationStatus>[] {
             Validations.MustHaveAZ09LessThan,
             Validations.LengthMustBe44Characters
         };
@@ -21,31 +21,20 @@ namespace Mzr.Validation
 
     public static class Validations
     {
-        public static ValidationResult MustHaveAZ09LessThan(MzrInput input)
+        [Field("Mzr")]
+        [Message("Mzr must be made up of A-Z, 0-9 or <")]
+        public static ValidationStatus MustHaveAZ09LessThan(MzrInput input)
         {
             var valid = Regex.IsMatch(input.Mzr, "^[0-9A-Z<]+$");
 
-            var returnValue = new ValidationResult("Mzr",
-                "Mzr must be made up of A-Z, 0-9 or <", ValidationStatus.Valid);
-
-            if (!valid)
-            {
-                returnValue.Status = ValidationStatus.Error;
-            }
-
-            return returnValue;
+            return valid ? ValidationStatus.Valid : ValidationStatus.Error;
         }
 
-        public static ValidationResult LengthMustBe44Characters(MzrInput input) {
+        [Field("Mzr")]
+        [Message("Mzr must have a length of 44 characters")]
+        public static ValidationStatus LengthMustBe44Characters(MzrInput input) {
             var valid = input.Mzr.Length == 44;
-            var returnValue = new ValidationResult("Mzr",
-                "Mzr must have a lenght of 44 characters", ValidationStatus.Valid);
-
-            if (!valid) {
-                returnValue.Status = ValidationStatus.Error;
-            }
-
-            return returnValue;
+            return valid ? ValidationStatus.Valid : ValidationStatus.Error;
         }
     }
 }
