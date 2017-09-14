@@ -67,8 +67,13 @@ namespace Mzr.Validation {
 
             // Lookup for each character in the array, a value
             // from the check-digit-map, and create a new integer array.
-            var valArr = (from v in checkArr
+            short[] valArr;
+            try {
+                valArr = (from v in checkArr
                          select CheckDigitMap[v]).ToArray();
+            } catch (KeyNotFoundException _) {
+                return 0;
+            }
 
             var total = 0;
             for (var idx = 0; idx < valArr.Count(); idx++) {

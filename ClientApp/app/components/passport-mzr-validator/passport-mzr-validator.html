@@ -1,21 +1,36 @@
 <template>
     <h1>${title}</h1>
-    <form>
-        <p>Passport No. <input type="text" value.bind="inputValue.PassportNo"/></p>
-        <p>Nationality <input type="text" value.bind="inputValue.Nationality"/></p>
-        <p>Date of Birth <input type="date" value.bind="inputValue.DateOfBirth"/></p>
-        <p>Gender <select value.bind="inputValue.Gender">
-            <option value="-1">Choose...</option>
-            <option value="0">Male</option>
-            <option value="1">Female</option>
-            </select></p>
-        <p>Date of Expiry <input type="date" value.bind="inputValue.DateOfExpiry"/></p>
-        <p>Mzr <input type="text" value.bind="inputValue.Mzr" /></p>
+    <form class="container-fluid">
+        <div class="form-horizontal">
+            <div class="form-group ${ ClassValidator('PassportNo', 'Error') }"><label class="control-label col-sm-3" for="PassportNo">Passport No.</label>
+                <div class="col-sm-9"><input id="PassportNo" type="text" value.bind="inputValue.PassportNo" class="form-control" /></div>
+            </div>
+            <div class="form-group ${ ClassValidator('Nationality', 'Error') }"><label class="control-label col-sm-3" for="Nationality">Nationality</label>
+                <div class="col-sm-9"><input id="Nationality" type="text" value.bind="inputValue.Nationality" class="form-control" /></div>
+            </div>
+            <div class="form-group ${ ClassValidator('DateOfBirth', 'Error') }"><label class="control-label col-sm-3" for="DateOfBirth">Date of Birth</label>
+                <div class="col-sm-9"><input id="DateOfBirth" type="date" value.bind="inputValue.DateOfBirth" class="form-control" /></div>
+            </div>
+            <div class="form-group ${ ClassValidator('Gender', 'Error') }"><label class="control-label col-sm-3" for="Gender">Gender</label>
+                <div class="col-sm-9"><select id="Gender" class="form-control" value.bind="inputValue.Gender">
+                    <option value="-1">Choose...</option>
+                    <option value="0">Male</option>
+                    <option value="1">Female</option>
+                    </select></div>
+            </div>
+            <div class="form-group ${ ClassValidator('DateOfExpiry', 'Error') }"><label class="control-label col-sm-3" for="DateOfExpiry">Date of Expiry</label>
+                <div class="col-sm-9"><input id="DateOfExpiry" type="date" value.bind="inputValue.DateOfExpiry" class="form-control" /></div>
+            </div>
+            <div class="form-group ${ ClassValidator('Mzr', 'Error') }">
+                <label class="control-label col-sm-3" for="Mzr">Mzr</label>
+                <div class="col-sm-9"><input id="Mzr" type="text" value.bind="inputValue.Mzr" class="form-control" /></div>
+            </div>
+        </div>
     </form>
-    <p>Validation Result: 
+    <p>Validation Result:
         <ul>
             <li repeat.for="result of validationResults">${result.field} - ${result.status} - ${result.message}</li>
         </ul>
     </p>
-    <input type="button" click.trigger="ValidateMzr()" />
+    <input type="button" click.trigger="ValidateMzr()" value="Check"/>
 </template>

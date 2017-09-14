@@ -19,6 +19,11 @@ export class PassportMzrValidator {
             Nationality: "",
             PassportNo: ""
         };
+        let isValid: boolean = this.validationResults.some((v, i, a) => { return v.field === "Mzr" && v.status === "Error"; });
+    }
+
+    ClassValidator(field: string, status: string): string {
+        return this.validationResults.some((v) => v.field === field && v.status === status) ? "has-error" : "";
     }
 
     ValidateMzr(): void {
@@ -26,6 +31,6 @@ export class PassportMzrValidator {
         this.serverApi.ValidateMzr(this.inputValue)
             .then(result => {
                 this.validationResults = result;
-            });
+            })
     }
 }
