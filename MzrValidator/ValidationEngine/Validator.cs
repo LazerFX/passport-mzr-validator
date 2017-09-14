@@ -18,26 +18,32 @@ namespace Mzr.ValidationEngine
             var result = new List<ValidationResult>();
 
             foreach (var validation in Validations) {
-                var interim = new ValidationResult("Field", "Error", ValidationStatus.Error);
-
-                interim.Field = (from a in validation.Method.GetCustomAttributes()
+                var fields = from a in validation.Method.GetCustomAttributes()
                                   where a.GetType() == typeof(FieldAttribute)
-                                  select ((FieldAttribute)a).FieldName).First();
+                                  select ((FieldAttribute)a).FieldName;
 
-                interim.Message = (from a in validation.Method.GetCustomAttributes()
+                var message = (from a in validation.Method.GetCustomAttributes()
                                   where a.GetType() == typeof(MessageAttribute)
                                   select ((MessageAttribute)a).Message).First();
 
-                interim.Status = validation(input);
+                foreach (var field in fields) {
+                    var interim = new ValidationResult("Field", "Error", ValidationStatus.Error);
 
-                result.Add(interim);
+                    interim.Field = field;
+
+                    interim.Message = message;
+
+                    interim.Status = validation(input);
+
+                    result.Add(interim);
+                }
             }
 
             return result.ToArray();
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
+    [System.AttributeUsage(System.AttributeTargets.Method, Inherited = false, AllowMultiple = true)]
     sealed class FieldAttribute : System.Attribute
     {
         // See the attribute guidelines at

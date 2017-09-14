@@ -9,7 +9,8 @@ namespace Mzr.Validation
         private static readonly Func<MzrInput, ValidationStatus>[] validations =
         new Func<MzrInput, ValidationStatus>[] {
             Validations.MustHaveAZ09LessThan,
-            Validations.LengthMustBe44Characters
+            Validations.LengthMustBe44Characters,
+            Validations.PassportNoAndMzrMustMatch
         };
         private static Validator<MzrInput> validator = new Validator<MzrInput>(validations);
 
@@ -35,6 +36,16 @@ namespace Mzr.Validation
         public static ValidationStatus LengthMustBe44Characters(MzrInput input) {
             var valid = input.Mzr.Length == 44;
             return valid ? ValidationStatus.Valid : ValidationStatus.Error;
+        }
+
+        [Field("Mzr")]
+        [Field("PassportNo")]
+        [Message("Passport Number and the MZR Passport area do not match.")]
+        public static ValidationStatus PassportNoAndMzrMustMatch(MzrInput input) {
+            var inputPassport = Helper.GetPassportNo(input);
+            var paddedPassport = Helper.InputPad(input.PassportNo, 9);
+            
+            return inputPassport == paddedPassport ? ValidationStatus.Valid : ValidationStatus.Warning;
         }
     }
 }
